@@ -1,7 +1,7 @@
 # callback-h3ll
 Javascript password generator homework. 
 
-application url: https://moreorless13.github.io/callback-h3ll/
+application url: https://moreorless13.github.io/GTFall21Bootcamp-passwordGeneratorHW/
 
 click "Generate Password" on the following screen:
 ![Alt text](./assets/images/initialscreen.png)
