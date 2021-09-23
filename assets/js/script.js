@@ -1,6 +1,11 @@
 // Assignment Code
 var generateBtn = document.querySelector("#generate");
 
+const uppercaseAlphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+const lowercaseAlphabet = 'abcdefghijklmnopqrstuvwxyz';
+const useableNumbers = '0123456789';
+const specialCharacters = "!#$%&'()*+,-./:;<=>?@[]^_`{|}~";
+
 // tried to start with a validation form here
 
 /*
@@ -32,29 +37,94 @@ const responseValidation = (counter) => {
 };*/
 
 
+var userPreferences = {
+  passwordLength: '',
+  useLowerCase: '',
+  useUpperCase: '',
+  useNumbers: '',
+  useSpecialCharacters: ''
+};
+var numUseableCharacters = 0;
 
-
-function generatePassword() {
-  let userPreferences = [];
+function getPasswordLengthPreference() {
   const length = Number(prompt('Please enter a number between 8-128: ', ''));
   if (length < 8 || length > 128 || length == NaN) {
     invalidResponseInput = "Please enter a number between 8-128";
     return generatePassword();
   } else {
-    userPreferences.push(length);
+    userPreferences.passwordLength = length;
   }
-  const lowercase = window.confirm('use lowercase?') ? userPreferences.concat('abcdefghijklmnopqrstuvwxyz') : false;
-  const uppercase = window.confirm('use uppercase?') ? userPreferences.concat('ABCDEFGHIJKLMNOPQRSTUVWXYZ') : false;
-  const number = window.confirm('use numbers?') ? userPreferences.concat('0123456789') : false;
-  const specialCharacters = window.confirm('use special characters?') ? userPreferences.concat("!#$%&'()*+,-./:;<=>?@[]^_`{|}~") : false; 
-  console.log(userPreferences)
-  
-  // for (let i = 0; i < userPreferences.length; i++) {
-    //   myArray.push(str.charAt(i));
-    // // let password = '';
-    // // for (let i = 0; i < length; i++) {
-    // //   password += [Math.floor(Math.random()*length)]
-    // console.log(userPreferences)
+}
+
+function getLowercaseResponse() {
+  const lowercase = window.confirm('use lowercase?');
+  userPreferences.useLowerCase = lowercase;
+}
+
+function getUppercaseResponse() {
+  const uppercase = window.confirm('use uppercase?');
+  userPreferences.useUpperCase = uppercase;
+}
+
+function getNumbersResponse() {
+  const numbers = window.confirm('use numbers?');
+  userPreferences.useNumbers = numbers;
+}
+
+function getSpecialCharsResponse() {
+  const specialCharacters = window.confirm('use special characters?');
+  userPreferences.useSpecialCharacters = specialCharacters;
+}
+
+var useableCharactersArray = [];
+
+function getUserPreferences() {
+  getPasswordLengthPreference();
+  getLowercaseResponse();
+  getUppercaseResponse();
+  getNumbersResponse();
+  getSpecialCharsResponse();
+  var lowerArray = []; 
+  var upperArray = [];
+  var numberArray = [];
+  var specialCharsArray = [];
+  if (userPreferences.useLowerCase) {
+    lowerArray = Array.from(lowercaseAlphabet);
+    numUseableCharacters += 26;
+  } else {
+    numUseableCharacters;
+  };
+  if (userPreferences.useUpperCase) {
+    upperArray = Array.from(uppercaseAlphabet);
+    numUseableCharacters += 26;
+  } else {
+    numUseableCharacters;
+  };
+  if (userPreferences.useNumbers) {
+    numberArray = Array.from(useableNumbers);
+    numUseableCharacters += 10;
+  } else {
+    numUseableCharacters;
+  };
+  if (userPreferences.useSpecialCharacters) {
+    specialCharsArray = Array.from(specialCharacters);
+    numUseableCharacters += 30;
+  } else {
+    numUseableCharacters;
+  };
+  // console.log(numUseableCharacters);
+  // console.log(useableCharactersArray);
+}
+
+console.log(useableCharactersArray);
+console.log(userPreferences); 
+
+function generatePassword() {
+  getUserPreferences();
+  var password = '';
+  for (let i = 0; i < userPreferences.passwordLength; i++) {
+      password += useableCharactersArray[Math.floor(Math.random()*numUseableCharacters)]
+  };
 };
 
 function writePassword() { 
@@ -132,39 +202,35 @@ generateBtn.addEventListener("click", writePassword);
 
 
 
-  // var userPreferences = getUserPreferences();
-  // var passwordLength = userPreferences.length;
-  // var lowerArray = userPreferences.useLowercase;
-  // var upperArray = userPreferences.useUppercase;
-  // var numberArray = userPreferences.useNumbers;
-  // var specialCharsArray = userPreferences.useSpecialChars;
-  // var combineArrays = lowerArray + "," + upperArray + "," + numberArray + "," + specialCharsArray;
-  // var tempArray = [''];
-  // let randomChar = '';
-  // for (let i = 0; i <= passwordLength; i++) {
-  //   password += combineArrays[Math.floor(Math.random()*combineArrays.length)];
-  //   tempArray.push(randomChar)
-  // }
-  // console.log(tempArray);
-  // console.log(combineArrays);
-  // console.log(combineArrays.length);
-  // console.log(randomChar);
+//   var userPreferences = getUserPreferences();
+//   var passwordLength = userPreferences.length;
+//   var lowerArray = userPreferences.useLowercase;
+//   var upperArray = userPreferences.useUppercase;
+//   var numberArray = userPreferences.useNumbers;
+//   var specialCharsArray = userPreferences.useSpecialChars;
+//   var combineArrays = lowerArray + "," + upperArray + "," + numberArray + "," + specialCharsArray;
+//   var tempArray = [''];
+//   let randomChar = '';
+//   for (let i = 0; i <= passwordLength; i++) {
+//     password += combineArrays[Math.floor(Math.random()*combineArrays.length)];
+//     tempArray.push(randomChar)
+//   }
+//   console.log(tempArray);
+//   console.log(combineArrays);
+//   console.log(combineArrays.length);
+//   console.log(randomChar);
 
 
-  // console.log(userPreferences);
-  // console.log(userPreferences.length);
-  // console.log(userPreferences.useLowercase);
-  // console.log(userPreferences.useUppercase);
-  // console.log(userPreferences.useNumbers);
-  // console.log(userPreferences.useSpecialChars);
+//   console.log(userPreferences);
+//   console.log(userPreferences.length);
+//   console.log(userPreferences.useLowercase);
+//   console.log(userPreferences.useUppercase);
+//   console.log(userPreferences.useNumbers);
+//   console.log(userPreferences.useSpecialChars);
 
 
 
-  // let passwordLength = userPreferences.length
+//   let passwordLength = userPreferences.length
 
 
 // Write password to the #password input
-
-
-
-
